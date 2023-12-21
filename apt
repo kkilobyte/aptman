@@ -1,0 +1,69 @@
+#!/bin/sh
+
+# debian users are used to apt, however they may get too used to apt, and forget
+# that arch systems use pacman, this tool is designed for debian users who rarely
+# touch arch, and probably only needed arch for a moment or two
+
+# made in bash since it makes more sense for aptman to call pacman, rather than 
+# being just another package manager that would probably break the system
+
+# the reason /bin/sh is used is in case bash is not installed as the user uses
+# zsh or fish instead of bash
+
+# made by kilo
+
+
+case "$1" in
+  install)
+    shift
+    sudo pacman -S "$@"
+    ;;
+  update)
+    sudo pacman -Sy
+    ;;
+  upgrade)
+    case "$2" in
+      --full)
+        sudo pacman -Syu
+        ;;
+      *)
+        sudo pacman -Sy "$2"
+        ;;
+    esac
+    ;;
+  list)
+    sudo pacman -Q
+    ;;
+  search)
+    shift
+    sudo pacman -Ss "$@"
+    ;;
+  remove)
+    shift
+    sudo pacman -R "$@"
+    ;;
+  *)
+    # echo "Usage: $0 {install|update|upgrade|list|search|remove} [package]"
+    echo "Usage: apt <operation> [package]"
+    echo
+    echo "Aptman is a commandline tool designed for Debian users who 
+might have to use Arch Linux for something, but is not used 
+to pacman's syntax, as it is different from apt. It is not 
+recommended for users who are switching to Arch entirely, 
+as you should get used to your distro's actual package 
+manager, which in the case of Arch Linux is pacman. To get 
+help with using pacman. Run ''pacman -h'' or ''pacman --help'' 
+in a terminal."
+    echo
+    echo Most used commands:
+    echo "  list - list packages based on package names
+  search - search in package descriptions
+  install - install packages
+  remove - remove packages
+  update - update list of available packages
+  upgrade - upgrade the system by installing/upgrading packages"
+    exit 1
+    ;;
+esac
+
+exit 0

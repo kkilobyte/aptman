@@ -1,6 +1,6 @@
 #!/bin/bash
 echo Downloading aptman...
-wget https://kkilouwu.bio/mirror/software/aptman/ap=
+wget https://kkilouwu.bio/mirror/software/aptman/apt
 
 read -p "Do you want to install aptman? (y/n): " answer
 
